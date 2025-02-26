@@ -85,9 +85,34 @@ class LinkedList:
         if temp.next:
             temp.next = temp.next.next
 
-        
-        
+    def __reversalRec(self, currNode): # SO(n) rec-stack , TO(n)
+        if not currNode.next:
+            self.head = currNode
+            return currNode
+        newNode = self.__reversalRec(currNode.next)
+        newNode.next = currNode
+        currNode.next = None
+        return currNode
 
+    def __reverseItr(self): # SO(1) TO(N)
+        if not self.head:
+            return
+        prev = None
+        curr = self.head
+        
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        self.head = prev # after reaching end no more nodes
+
+    def reverse(self):
+        if not self.head:
+            print('No head for the LL')
+            return
+        # self.__reversalRec(self.head)
+        self.__reverseItr()
 
 
 ll = LinkedList()
@@ -100,6 +125,11 @@ ll.insertAtTail(3)
 ll.insertAtHead(5)
 ll.insertAtPosition(3, 13)
 ll.deleteAtPos(3)
+ll.reverse()
+ll.printLL()
+ll.reverse()
+ll.printLL()
+
 # ll.deleteTail()
 # ll.deleteTail()
 # ll.deleteTail()
@@ -107,7 +137,6 @@ ll.deleteAtPos(3)
 # ll.deleteTail()
 # ll.deleteTail()
 ll.deleteTail()
-ll.printLL()
  
 
 # 5 10 13 4 2 1 3 3  
