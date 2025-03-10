@@ -15,7 +15,7 @@ def exist(board, word):
     def dfs(r, c, index):
         if index == len(word):  # Found the word
             return True
-        if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != word[index]:
+        if not (0 <= r < rows and 0 <= c < cols) or board[r][c] != word[index]:
             return False
 
         # Mark the cell as visited temporarily

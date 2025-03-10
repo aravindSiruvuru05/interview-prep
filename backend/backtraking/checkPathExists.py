@@ -15,7 +15,7 @@ def checkPathExists(mat):
         visited.add((i, j))
         for dx, dy in delta:
             k, l = i + dx , j + dy
-            if 0 <= k  < m and 0 <= l < n and  (k, l) not in visited and mat[k][l] != 0:
+            if 0 <= k  < m and 0 <= l < n and (k, l) not in visited and mat[k][l] != 0:
                 if dfs(k, l):
                     return True
         path.pop()
