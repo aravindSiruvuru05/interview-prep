@@ -1,3 +1,5 @@
+from collections import deque
+
 # Word Search in a Matrix (Backtracking)
 # Given an m x n board and a word, check if the word exists in the grid.
 
@@ -9,7 +11,7 @@ def exist(board, word):
         return False
 
     rows, cols = len(board), len(board[0])
-
+    delta = [(0, 1), (0, -1), (1, 0), (-1, 0)]
     def dfs(r, c, index):
         if index == len(word):  # Found the word
             return True
@@ -18,14 +20,14 @@ def exist(board, word):
 
         # Mark the cell as visited temporarily
         temp, board[r][c] = board[r][c], "#"
+        found = False
 
-        # Explore 4 possible directions (up, down, left, right)
-        found = (dfs(r+1, c, index+1) or 
-                 dfs(r-1, c, index+1) or 
-                 dfs(r, c+1, index+1) or 
-                 dfs(r, c-1, index+1))
+        for x, y in delta:
+            xx = r + x
+            yy = c + y
+            if dfs(xx, yy, index+1):
+                found = True
 
-        # Restore the cell after backtracking
         board[r][c] = temp
 
         return found
@@ -46,3 +48,48 @@ board = [
 word = "ABCCED"
 
 print(exist(board, word))  # Output: True
+
+
+# BFS
+
+def exist(board, word):
+    if not board or not board[0]:
+        return False
+
+    rows, cols = len(board), len(board[0])
+    delta = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+    def bfs(r, c):
+        queue = deque([(r, c, 0)])  
+        visited = set()  
+
+        while queue:
+            x, y, idx = queue.popleft()
+            if idx == len(word):
+                return True
+            if board[x][y] != word[idx]:
+                continue
+
+            visited.add((x, y))
+            for dx, dy in delta:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < rows and 0 <= ny < cols and (nx, ny) not in visited:
+                    queue.append((nx, ny, idx + 1))
+
+        return False
+
+    for r in range(rows):
+        for c in range(cols):
+            if board[r][c] == word[0] and bfs(r, c):
+                return True
+
+    return False
+
+board = [
+    ['A', 'B', 'C', 'E'],
+    ['S', 'F', 'C', 'S'],
+    ['A', 'D', 'E', 'E']
+]
+word = "ABCCED"
+
+print(exist(board, word)) 
