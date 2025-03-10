@@ -12,29 +12,28 @@ def exist(board, word):
 
     rows, cols = len(board), len(board[0])
     delta = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
     def dfs(r, c, index):
         if index == len(word):  # Found the word
             return True
-        if not (0 <= r < rows and 0 <= c < cols) or board[r][c] != word[index]:
-            return False
 
-        # Mark the cell as visited temporarily
         temp, board[r][c] = board[r][c], "#"
         found = False
 
         for x, y in delta:
-            xx = r + x
-            yy = c + y
-            if dfs(xx, yy, index+1):
-                found = True
-
+            xx, yy = r + x, c + y
+            
+            if 0 <= xx < rows and 0 <= yy < cols and board[xx][yy] != word[index]:
+                if dfs(xx, yy, index + 1):
+                    found = True
+                    break 
         board[r][c] = temp
 
         return found
 
     for r in range(rows):
         for c in range(cols):
-            if board[r][c] == word[0] and dfs(r, c, 0):  # Start search from matching letter
+            if board[r][c] == word[0] and dfs(r, c, 0): 
                 return True
 
     return False
