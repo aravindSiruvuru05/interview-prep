@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main1() {
+func main2() {
 	arr := []int{1, 2, 3, 4, 5}
 
 	ch := make(chan int, 4)

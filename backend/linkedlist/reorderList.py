@@ -32,13 +32,22 @@ class LL:
         self.head = head
         
     def helper(self, revNode):
-        if not revNode: # we go till the end of linked list and then return the initial nodes one by one as we will get the revrse node from the parameter
-            return self.head
-        curr = self.helper(revNode.next)
+        if not revNode:  # Base case: reach end of list
+            return self.head  
+        
+        curr = self.helper(revNode.next)  # Recursively go to end
+        
+        # Stop condition to prevent cycle
+        if curr is None or curr == revNode or curr.next == revNode:
+            revNode.next = None  # Properly terminate list
+            return None
+
         temp = curr.next
         curr.next = revNode
         revNode.next = temp
+
         return temp
+
 
     def reorder(self):
         self.helper(self.head)

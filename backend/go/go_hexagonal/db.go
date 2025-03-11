@@ -20,3 +20,5 @@ func NewDB() *DB {
 		Hits:  0,
 	}
 }
+
+)

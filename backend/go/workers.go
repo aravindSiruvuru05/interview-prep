@@ -51,7 +51,7 @@ func processTasks(n int) int {
 	return n * 2
 }
 
-func main() {
+func main1() {
 	wp := NewWorkerPool(3, 10) // 3 workers, buffer 10 tasks
 
 	for i := 1; i <= 20; i++ {
