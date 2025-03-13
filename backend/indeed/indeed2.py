@@ -33,7 +33,7 @@ queries = [
 
 
 def processInvertedIndex(jds):
-    invertedIndex = defaultdict(list) # word -> [jobids] N * W
+    invertedIndex = defaultdict(set) # word -> [jobids] N * W
     
     for jd in jds:
         id, desc = jd['id'], jd['description']
