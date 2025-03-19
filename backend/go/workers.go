@@ -59,7 +59,7 @@ func (w *Worker) Wait() {
 	w.WG.Wait()
 }
 
-func main() {
+func main12() {
 	pool := NewWorker(5)
 
 	workerFunc := func(task interface{}) interface{} {
