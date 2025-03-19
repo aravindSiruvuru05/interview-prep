@@ -1,8 +1,8 @@
 # When to Use Which?
 # Scenario	Use Algorithm
-# DAG (Directed Acyclic Graph)	Topological Sort (O(V + E))   -  efficieant for DAGs
-# General Graph with non-negative weights	Dijkstra’s Algorithm (O(E log V)) -- works for all directed undirected non negative but
-# specially for directed graph topo method give beter time complexity as for evey node we are not rebalancing the nodes (happush (logN)) in pq in relaxation phase
+# DAG (Directed Acyclic Graph)	| Topological Sort (O(V + E))   |  efficieant for DAGs
+# General Graph with non-negative weights	| Dijkstra’s Algorithm (O(E log V)) | works for all directed undirected non negative but
+# specially for directed graph topo method give beter time complexity as for evey node we are not rebalancing the nodes (heappush (logN)) in pq in relaxation phase
 # General Graph with negative weights	Bellman-Ford Algorithm (O(VE))
 
 
