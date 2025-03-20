@@ -28,7 +28,7 @@ func (r *RateLimiter) Allow() bool {
 	newTS := []time.Time{}
 	now := time.Now()
 	for _, ts := range r.PrevTimeStamps {
-		if now.Sub(ts) < time.Second {
+		if now.Sub(ts) < r.Window {
 			newTS = append(newTS, ts)
 		}
 	}
@@ -40,3 +40,4 @@ func (r *RateLimiter) Allow() bool {
 	}
 	return false
 }
+

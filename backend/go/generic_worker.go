@@ -61,7 +61,7 @@ func (w *WorkerPoolG[T, R]) Wait() {
 	w.WG.Wait()
 }
 
-func main() {
+func main234() {
 	// Later, attach generic types!
 	pool := NewWorkerPool[int, int](5)
 

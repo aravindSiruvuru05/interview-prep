@@ -12,7 +12,7 @@ func (p *Person) changeName() {
 	p.name = "asdf"
 }
 
-func main() {
+func mainasd() {
 
 	p := Person{
 		name: "qqwer",
