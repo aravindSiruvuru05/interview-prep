@@ -25,9 +25,11 @@ func worker(tasks chan int, result chan int, wg *sync.WaitGroup) {
 			result <- t
 		}
 	}
-
 }
-func main() {
+func maindd() {
+
+
+	
 	start := 1
 	end := 100
 	workersCnt := 4

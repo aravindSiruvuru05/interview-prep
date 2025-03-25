@@ -1,6 +1,5 @@
 from collections import deque
 
-
 def isCyclicInDirectedGraph(adj) -> bool :
     indeg = [0] * len(adj)
     

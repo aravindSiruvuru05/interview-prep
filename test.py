@@ -1,52 +1,38 @@
-from collections import defaultdict
 
-class ResumeVersionSaver:
-    def __init__(self):
-        self.user_resume_versions = defaultdict(dict) # { user_id: { 1: delta } }
-        self.base_resumes = defaultdict(dict) # { user_id: {} )
-    
-    def save(self, user_id, new_resume):
-        if user_id not in self.base_resumes:
-            self.base_resumes[user_id] = new_resume
-            return 1
+# You have k servers numbered from 0 to k-1 that are being used to handle multiple requests simultaneously. Each server has infinite computational capacity but cannot handle more than one request at a time. The requests are assigned to servers according to a specific algorithm:
+
+# The ith (0-indexed) request arrives.
+# If all servers are busy, the request is dropped (not handled at all).
+# If the (i % k)th server is available, assign the request to that server.
+# Otherwise, assign the request to the next available server (wrapping around the list of servers and starting from 0 if necessary). For example, if the ith server is busy, try to assign the request to the (i+1)th server, then the (i+2)th server, and so on.
+# You are given a strictly increasing array arrival of positive integers, where arrival[i] represents the arrival time of the ith request, and another array load, where load[i] represents the load of the ith request (the time it takes to complete). Your goal is to find the busiest server(s). A server is considered busiest if it handled the most number of requests successfully among all the servers.
+
+
+from sortedcontainer import SortedList
+busyservers = heap ( next_available_time, server_idx) 
+availableservers = []
+
+def solve(reqs, load, k):
+
+    n = len(reqs)
+    busy = []
+    availableservers = SortedList(range(k))
+
+    for i, (begin, capacity) in enumerate(zip(reqs, load)):
+
+        while busy and busy[0][0] < begin:
+            _, server_id = heapq.pop(busy)
+            availableservers.add(server_id)
         
-        # check if current versions exist and get all those changes
-        curr_versions = self.user_resume_versions[user_id]
-        curr_version = max(curr_versions.keys()) + 1 if curr_versions else 1
-    
-        prev_resume = self.get_versioned_resume(user_id, curr_version - 1)
-
-        self.user_resume_versions[user_id][curr_version] = self.get_delta(prev_resume, new_resume)
-
-    def get_versioned_resume(self, user_id, version):
-        if user_id not in self.user_resume_versions or user_id not in self.base_resumes:
-            return None
-
-        currresume = self.base_resumes[user_id]
-
-        versions = sorted(self.user_resume_versions[user_id].keys())
-        for v in versions:
-            if v >  version:
-                break
-            currresume.update(self.user_resume_versions[user_id][v])
-        return currresume
-
-    def get_latest_verions(self, user_id):
-        curr_versions = self.user_resume_versions[user_id]
-        latest_version = max(curr_versions.keys())
-        return self.get_versioned_resume(user_id, latest_version)
+        if not availableservers:
+            continue
+            
+        server = availableservers.bi_sect(i % k)
+        if server == len(k):
+            server = 0
+        heapq.heappuh(busy, ())
+        
 
 
-    def get_delta(self, old_resume, new_resume):
-        return {k: v for k, v in new_resume.items() if old_resume[k] != v}
-    
 
-rvs = ResumeVersionSaver()
-rvs.save(123, { 'name': 'aravind' })
-
-print(rvs.base_resumes)
-print(rvs.user_resume_versions)
-rvs.save(123, { 'name': 'aravind12' })
-latest = rvs.get_latest_verions(123)
-print(latest)
 

@@ -35,9 +35,7 @@ class LRUCache:
     def put(self, key, val):
         if key in self.cache:
             node = self.cache[key]
-
             node.val = val
-
             self.remove(node)
             self.add(node)
         else:

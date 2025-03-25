@@ -1,26 +1,58 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
 type RateLimiter struct {
-	ip string
-	bucket int
-	
+	Limit          int
+	Window         time.Duration
+	PrevTimestamps []time.Time
 }
 
-func main2() {
-	arr := []int{1, 2, 3, 4, 5}
-
-	ch := make(chan int, 4)
-
-	go func() {
-		for el := range arr {
-			ch <- el
+func (r *RateLimiter) Allow() bool {
+	now := time.Now()
+	var newTS []time.Time
+	for _, prev := range r.PrevTimestamps {
+		if now.Sub(prev) < r.Window {
+			newTS = append(newTS, prev)
 		}
-	}()
+	}
+	r.PrevTimestamps = newTS
+	if len(newTS) < r.Limit {
+		r.PrevTimestamps = append(r.PrevTimestamps, now)
+		return true
+	}
+	return false
 
-	for r := 0; r < len(arr); r++ {
-		fmt.Println(<-ch)
+}
+
+func main() {
+
+	rl := &RateLimiter{
+		Limit:          5,
+		Window:         time.Second,
+		PrevTimestamps: []time.Time{},
+	}
+	var counter int
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+	for i := range 10 {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			mu.Lock()
+			if rl.Allow() {
+				counter += 1
+			} else {
+				fmt.Println("not allowed")
+			}
+			mu.Unlock()
+		}(i)
 	}
 
+	wg.Wait()
+	fmt.Println(counter)
 }
