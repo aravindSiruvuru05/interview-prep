@@ -41,7 +41,9 @@ result = checkredundent([[1, 2], [2, 3], [3, 1]], 3)
 print(result)
 
 
-# You have k servers numbered from 0 to k-1 that are being used to handle multiple requests simultaneously. Each server has infinite computational capacity but cannot handle more than one request at a time. The requests are assigned to servers according to a specific algorithm:
+# You have k servers numbered from 0 to k-1 that are being used to handle multiple requests simultaneously.
+#  Each server has infinite computational capacity but cannot handle more than one request at a time.
+#  The requests are assigned to servers according to a specific algorithm:
 
 # The ith (0-indexed) request arrives.
 # If all servers are busy, the request is dropped (not handled at all).

@@ -3,7 +3,6 @@ class TreeNode:
         self.name = name
         self.children = []
 
-
 class CompanyHierarchy:
     def __init__(self, relations):
         self.nodes = {}
