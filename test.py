@@ -37,8 +37,8 @@
 
 
 
-for i in {1..5}; do
-  echo "Try #$i"
-  dig grofyy-prod-alb-1233227423.us-east-2.elb.amazonaws.com +stats | grep "Query time"
-  sleep 2
-done
+# for i in {1..5}; do
+#   echo "Try #$i"
+#   dig grofyy-prod-alb-1233227423.us-east-2.elb.amazonaws.com +stats | grep "Query time"
+#   sleep 2
+# done
