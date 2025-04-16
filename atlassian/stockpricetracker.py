@@ -18,8 +18,7 @@ class StockPriceTracker:
     def get_max(self):
         if not self.priceCount:
             return None
-        max_price = self.priceCount.peekitem(-1)
-        print(max_price)
+        max_price = self.priceCount.peekitem(-1)[0]
         
         # Find one timestamp with that price
         for ts, price in self.timeToPrice.items():
@@ -37,3 +36,21 @@ s.update("T1", 1)
 print(s.get_max())  # (2, "T2")
 s.update("T3", 7)
 print(s.get_max())  # (7, "T3")
+
+
+import heapq
+class StockTrackerWithHeap:
+    def __init__(self):
+        self.priceHeap = []
+        self.timeToPrice = {}
+
+    def update(self, time, price):
+        self.timeToPrice[time] = price
+        heapq.heappush(self.priceHeap, (-price, time))
+
+    def get_max(self):
+        maxPrice, time = self.priceHeap[0]
+        while self.timeToPrice[time] != -maxPrice:
+            heapq.heappop(self.priceHeap)
+            maxPrice, time = self.priceHeap[0]
+        return -maxPrice

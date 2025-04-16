@@ -1,6 +1,7 @@
 # 📌 Problem Statement: Collection Size Tracker
 # You are asked to implement a system to track file sizes across multiple collections in a storage system.
-# Each file can belong to one or more collections. Files can be added or deleted, and collections can be dynamically created or removed as files are added or deleted.
+# Each file can belong to one or more collections. Files can be added or deleted, 
+# and collections can be dynamically created or removed as files are added or deleted.
 
 # 📊 Requirements:
 # Track the total size of each collection.
@@ -9,7 +10,8 @@
 
 # If a collection’s total size becomes zero, it should be removed completely.
 
-# Multiple collections can be attached to a file — when adding or deleting a file, update all relevant collections' total sizes.
+# Multiple collections can be attached to a file — when adding or deleting a file,
+#  update all relevant collections' total sizes.
 
 # ✏️ Operations to Support:
 # add_file(collections, file_size)
@@ -21,7 +23,7 @@
 # get_top_n_collections(n)
 # → Returns the top n collections sorted by their total size in descending order.
 
-from sortedcontainers import SortedDict # type: ignore
+from sortedcontainers import SortedDict
 from collections import defaultdict
 
 class CollectionTracker:
