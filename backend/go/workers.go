@@ -7,10 +7,10 @@ import (
 )
 
 type Worker struct {
-	Tasks      chan interface{}
 	WorkersCnt int
 	WG         sync.WaitGroup
 	TaskWg     sync.WaitGroup
+	Tasks      chan interface{}
 	ResultChan chan interface{} // optional when we want to return some value back
 	Results    []interface{}
 }

@@ -1,3 +1,5 @@
+#  refer cycle_detection.MD for notes
+
 from collections import defaultdict, deque
 
 #  topological sort along with cyccle detection
@@ -60,7 +62,6 @@ top_order = topological_sort(graph)
 print(top_order)  # Output: [0, 1, 2, 3]
 
 
-
 # topological sort along with if cycle detected return []
 def dfs_topological_sort(V, edges):
     graph = defaultdict(list)
@@ -77,17 +78,17 @@ def dfs_topological_sort(V, edges):
         
         for neighbor in graph[node]:
             if neighbor not in visited:
-                if dfs(neighbor):
-                    return True
-            elif neighbor in path_visited:
+                if not dfs(neighbor):
                     return False
-        
-        path_visited.add(node)
+            elif neighbor in path_visited:
+                return False
+
+        path_visited.remove(node)
         topo_order.append(node)
         return True
     
     for node in range(V):
-        if not visited[node]:
+        if node not in visited:
             if not dfs(node):
                 return "Cycle detected"
     

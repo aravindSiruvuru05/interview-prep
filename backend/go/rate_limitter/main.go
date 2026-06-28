@@ -41,3 +41,47 @@ func (r *RateLimiter) Allow() bool {
 	return false
 }
 
+
+
+// -------------------------------------------------------------
+
+package main
+
+import (
+	"sync"
+	"time"
+)
+
+type FixedWindowLimiter struct {
+	Limit       int
+	Window      time.Duration
+	count       int
+	windowStart time.Time
+	mu          sync.Mutex
+}
+
+func NewFixedWindowLimiter(limit int, window time.Duration) *FixedWindowLimiter {
+	return &FixedWindowLimiter{
+		Limit:       limit,
+		Window:      window,
+		windowStart: time.Now(),
+	}
+}
+
+func (r *FixedWindowLimiter) Allow() bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	now := time.Now()
+	if now.Sub(r.windowStart) >= r.Window {
+		// window expired; start a fresh one
+		r.windowStart = now
+		r.count = 0
+	}
+
+	if r.count < r.Limit {
+		r.count++
+		return true
+	}
+	return false
+}

@@ -1,0 +1,109 @@
+\type Parser struct {
+
+   mu *sync.Mutex
+
+}
+
+
+
+
+
+func (p *Parser) getUrls(url string) []string {
+
+   return []string{}
+
+}
+
+
+
+
+
+
+
+func crawl(url, p Parser, wg , cache map[string]bool)  {
+
+   mu.MuLock()
+
+   defer mu.MuUnlock()
+
+   cache[u] = True
+
+
+
+   newUrls := p.getUrls(url)
+
+   for nu := range newUrls {
+
+       if isValidDomain(nu, url) and not in cache {
+
+           ch <- url
+
+       }
+
+   }
+
+   wg.Done()
+
+}
+
+
+
+func main() {
+
+   p = &Parser{}
+
+   smp := symp[4]
+
+   startUrl := "http://start"
+
+   wg := &sync.WaitGroup{}
+
+   resolvedUrls = make(chan)
+
+   mu = sync.MuLock{}
+
+   n = 4
+
+  
+
+   func timer() {
+
+       return setTimeout(()=>{
+
+           resolvedUrls.close()
+
+       }, 15)
+
+   }
+
+  
+
+   for u := range(resolvedUrls):
+
+       i = 0
+
+       while i < n:
+
+           wg.Add(1)
+
+           closer = timer()
+
+           crawl(u, wg)
+
+           colser()
+
+           i++
+
+       wg.Wait()
+
+}
+
+1st write a web crawler
+
+Extension: 
+
+do this in a threads such that it works parallely
+
+Next: 
+
+	This will spawn threads exponentially, we dont want that how can you optimise to only spawn 4 threads at max spawned up
